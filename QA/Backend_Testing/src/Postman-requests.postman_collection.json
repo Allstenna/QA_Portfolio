@@ -1,0 +1,148 @@
+{
+  "info": {
+    "_postman_id": "1ff486c0-4052-44d9-885a-99f37da1a76d",
+    "name": "Postman-requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53524677",
+    "_collection_link": "https://go.postman.co/collection/53524677-1ff486c0-4052-44d9-885a-99f37da1a76d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "getUserID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "try {\r",
+              "    // сохраняем userId из json ответа в переменную окружения\r",
+              "    pm.environment.set(\"userId\", pm.response.json().args.userId);\r",
+              "} catch(e) {\r",
+              "    console.log(e);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{postman}}/get?userId=777",
+          "host": [
+            "{{postman}}"
+          ],
+          "path": [
+            "get"
+          ],
+          "query": [
+            {
+              "key": "userId",
+              "value": "777"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createUser",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"userId from env is equal to userId from response\", function () {\r",
+              "    pm.expect(parseInt(pm.environment.get(\"userId\"))).to.equal(\r",
+              "        pm.response.json().data.userId\r",
+              "    );\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"userId\": {{userId}}, \"username\": \"Bob\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{postman}}/post",
+          "host": [
+            "{{postman}}"
+          ],
+          "path": [
+            "post"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateUser",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userId\": 123,\r\n  \"username\": \"mich_jag\",\r\n  \"email\": \"mich@example.com\",\r\n  \"preferences\": {\r\n    \"theme\": \"dark\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{postman}}/put",
+          "host": [
+            "{{postman}}"
+          ],
+          "path": [
+            "put"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "pm.test(\"Status is ok, response is json\", function () {\r",
+          "    pm.response.to.be.ok;\r",
+          "    pm.response.to.be.json;\r",
+          "});"
+        ]
+      }
+    }
+  ]
+}
