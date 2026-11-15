@@ -2,7 +2,7 @@
 
 ## Database Model
 
-![schema](misc/images/schema.png)
+![schema](misc/schema.png)
 
 Таблица **pizzeria** (справочник пиццерий)
 
